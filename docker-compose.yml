@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel-app
+    restart: always
+    ports:
+      - "8880:80"
+    volumes:
+      - /root/nfs-worker/laravel-docker-swarm-example:/var/www/html
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=laravel
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    networks:
+      - laravel-network
+
+  db:
+    image: mysql:5.7
+    container_name: laravel-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /root/nfs-worker/laravel-docker-swarm-example/db_data:/var/lib/mysql
+    networks:
+      - laravel-network
+
+volumes:
+  db-data:
+
+networks:
+  laravel-network:
