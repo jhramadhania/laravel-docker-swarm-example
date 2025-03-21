@@ -16,6 +16,11 @@ services:
       - DB_PASSWORD=root
     networks:
       - laravel-network
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.app == nia
 
   db:
     image: mysql:5.7
@@ -28,6 +33,11 @@ services:
       - /root/nfs-worker/laravel-docker-swarm-example/db_data:/var/lib/mysql
     networks:
       - laravel-network
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.app == nia
 
 volumes:
   db-data:
