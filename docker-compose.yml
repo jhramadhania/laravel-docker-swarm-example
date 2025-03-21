@@ -16,6 +16,7 @@ services:
       - DB_PASSWORD=root
     networks:
       - laravel-network
+    command: ["sh", "-c", "php artisan migrate && nginx && php-fpm"]
     deploy:
       replicas: 1
       placement:

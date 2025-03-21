@@ -39,3 +39,12 @@ EXPOSE 80
 
 # Start Nginx and PHP-FPM
 CMD ["sh", "-c", "nginx && php-fpm"]
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Set permissions for storage and bootstrap/cache directories
+RUN chown -R www-data:www-data /var/www/html/storage
+RUN chown -R www-data:www-data /var/www/html/bootstrap/cache
+
+
